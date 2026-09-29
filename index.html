@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="Browser-based editor for UnHoarder 1.0.0 filter.json files for Diablo II: Resurrected.">
+  <title>UnHoarder - Builder</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">D2R · UnHoarder 1.0.0</div>
+      <h1>UnHoarder - Builder</h1>
+      <p class="subtitle">Build schema v3 <code>filter.json</code> files entirely in your browser.</p>
+    </div>
+    <div class="top-actions">
+      <span id="localSaveStatus" class="local-save-status" aria-live="polite">Loading local workspace…</span>
+      <button id="newFilterBtn" class="button ghost">New filter</button>
+      <button id="importFilterBtn" class="button ghost">Import filter.json</button>
+      <input id="filterImportInput" type="file" accept=".json,application/json" hidden>
+      <button id="clearDataBtn" class="button ghost" disabled>Clear data</button>
+      <button id="downloadBtn" class="button primary">Download filter.json</button>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="privacy-banner panel compact">
+      <div class="privacy-icon">⌂</div>
+      <div>
+        <strong>Local-only processing</strong>
+        <span>Your Excel tables and current filter are stored locally in this browser between visits. Nothing is uploaded to a server.</span>
+      </div>
+    </section>
+
+    <section id="dataPanel" class="panel data-panel" aria-label="Game data panel; click to fold or unfold" aria-expanded="true">
+      <div id="dataExpanded">
+        <div class="section-heading">
+          <div>
+            <h2>Load game / mod data</h2>
+            <p>Drop the extracted D2R Excel tables here. Core files unlock base-name and item-type selectors; unique/set tables add searchable authoring shortcuts.</p>
+          </div>
+        </div>
+
+        <div id="dropZone" class="drop-zone" tabindex="0" role="button" aria-label="Upload D2R Excel files">
+          <input id="dataFileInput" type="file" multiple accept=".txt,.tsv,text/plain" hidden>
+          <div class="drop-title">Drop Excel files here</div>
+          <div class="drop-copy">or click to choose multiple files</div>
+          <div class="drop-files">weapons.txt · armor.txt · misc.txt · itemtypes.txt · UniqueItems.txt · SetItems.txt</div>
+        </div>
+
+        <div id="fileStatusGrid" class="file-grid"></div>
+        <div id="catalogSummary" class="catalog-summary muted">Load data to enable searchable catalogs.</div>
+      </div>
+
+      <div id="dataCompactBar" class="data-compact-bar" hidden>
+        <div id="compactFileStatus" class="compact-file-status" aria-label="Loaded game data files"></div>
+      </div>
+    </section>
+
+    <div class="workspace-grid">
+      <section class="panel rules-panel">
+        <div class="section-heading inline">
+          <div>
+            <h2>Rules</h2>
+          </div>
+          <div class="row-actions">
+            <button id="addShowBtn" class="button small">+ Show</button>
+            <button id="addHideBtn" class="button small ghost">+ Hide</button>
+          </div>
+        </div>
+
+        <div class="item-finder">
+          <label for="itemFinderInput">Find base, unique, or set item</label>
+          <input id="itemFinderInput" class="text-input" type="search" autocomplete="off" placeholder="e.g. Shako, Harlequin Crest, Tal Rasha…">
+          <div id="itemFinderResults" class="finder-results"></div>
+          <p class="help">Unique/set results generate supported base-item + rarity conditions; they do not create identity-oracle rules.</p>
+        </div>
+
+        <div id="ruleList" class="rule-list"></div>
+        <div id="emptyRules" class="empty-state">
+          <strong>No rules yet.</strong>
+          <span>Add a Show/Hide rule or use the item finder.</span>
+        </div>
+      </section>
+
+      <section class="panel editor-panel">
+        <div id="ruleEditorEmpty" class="empty-state tall">
+          <strong>Select a rule to edit.</strong>
+          <span>The editor mirrors UnHoarder 1.0.0 schema v3.</span>
+        </div>
+        <div id="ruleEditor" hidden></div>
+      </section>
+
+      <aside class="panel preview-panel">
+        <div class="section-heading inline preview-heading">
+          <div>
+            <h2>Preview</h2>
+          </div>
+          <span id="validationBadge" class="badge neutral">Empty</span>
+        </div>
+        <div class="stats-row">
+          <span><strong id="ruleCount">0</strong> / 4,096 rules</span>
+          <span><strong id="byteCount">0</strong> / 4 MiB</span>
+        </div>
+        <div id="validationMessages" class="validation-messages"></div>
+        <pre id="jsonPreview" class="json-preview" aria-label="filter.json preview"></pre>
+        <div class="preview-actions">
+          <button id="copyBtn" class="button ghost small">Copy JSON</button>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <template id="conditionChooserTemplate">
+    <div class="condition-block">
+      <div class="condition-title-row">
+        <div>
+          <strong class="chooser-title"></strong>
+          <span class="chooser-help help"></span>
+        </div>
+      </div>
+      <div class="chooser-row">
+        <input class="text-input chooser-input" type="text" autocomplete="off">
+        <button class="button small chooser-add" type="button">Add</button>
+      </div>
+      <div class="chips chooser-chips"></div>
+      <div class="suggestions chooser-suggestions"></div>
+    </div>
+  </template>
+
+  <script src="js/filter-model.js"></script>
+  <script src="js/workspace-store.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

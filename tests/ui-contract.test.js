@@ -1,0 +1,44 @@
+const assert = require('assert');
+const fs = require('fs');
+const path = require('path');
+const app = fs.readFileSync(path.join(__dirname, '..', 'js', 'app.js'), 'utf8');
+assert(!app.includes('nine D2R quality families'));
+assert(app.includes("el('div','numeric-card other-condition-card')"));
+assert(app.includes("el('strong','','Other')"));
+assert(app.includes("renderBooleanCondition(bools,block,'ethereal','Ethereal')"));
+assert(app.includes("renderBooleanCondition(bools,block,'identified','Identified')"));
+assert(app.includes("el('strong','','Rule name')"));
+assert(app.includes("Builder label only · ignored by UnHoarder at runtime"));
+assert(app.includes("if (kind === 'hide') return;"));
+assert(!app.includes('Hide is the visibility action; additional actions are still allowed.'));
+assert(app.includes("block.ruleName=ruleNameInput.value"));
+assert(app.includes("'rule-display-name'"));
+
+assert(app.includes("card.draggable = true"));
+assert(app.includes("function reorderRule(fromIndex, insertionIndex)"));
+assert(app.includes("'rule-drag-handle'"));
+assert(app.includes('startRuleDragAutoScroll(event.clientY)'));
+assert(app.includes('function ruleDragScrollStep()'));
+assert(app.includes('window.scrollBy(0, step)'));
+assert(app.includes('scrollContainer.scrollTop += step'));
+assert(app.includes('updateRuleDropIndicator(ruleDragPointerY)'));
+assert(app.includes("'rule-card-secondary-actions'"));
+assert(app.includes('rule-duplicate-icon'));
+assert(app.includes("duplicate.title = 'Duplicate rule'"));
+assert(app.includes("ruleActions.append(duplicate, remove)"));
+assert(!app.includes("el('button','button ghost','Duplicate rule')"));
+
+const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+const css = fs.readFileSync(path.join(__dirname, '..', 'styles.css'), 'utf8');
+assert(!html.includes('>Step 1<'));
+assert(!html.includes('>Step 2<'));
+assert(!html.includes('>Step 3<'));
+assert(app.includes("placeholder:'e.g. r33'"));
+assert(!app.includes("placeholder:'e.g. divo'"));
+assert(css.includes('.data-compact-bar[hidden] { display: none !important; }'));
+assert(!app.includes("'Move ↑'"));
+assert(!app.includes("'Move ↓'"));
+assert(!html.includes('downloadBtnSecondary'));
+assert(!app.includes('downloadBtnSecondary'));
+
+console.log('ui contract tests: OK');
