@@ -4,6 +4,10 @@ A static, browser-based editor for **UnHoarder 1.0.0** `filter.json` files for D
 
 The site has no backend and no external runtime dependencies. D2R Excel files are read locally by the browser, persisted locally with IndexedDB for the next visit, and are never sent anywhere.
 
+## For mod builders
+
+Mod builders are expected and should fork this repository to build their own versions of the builder that accomodate all the changes they made in their mods. The mod does not provide .txt file auto-load at the moment, so you will have to add it yourself. In the future this capability will be added,
+
 ## Features
 
 - Canonical UnHoarder **schema v3** output.
