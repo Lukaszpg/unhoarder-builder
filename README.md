@@ -134,7 +134,3 @@ node tests/workspace-store.test.js
 - drop sound: 1–63 characters using letters, numbers, `_`, `-`
 - minimap shapes: `circle`, `diamond`, `triangle`, `star`
 - minimap size defaults to 12 px and is clamped by UnHoarder to 12–40 px
-
-## Notes
-
-This editor intentionally targets the current production rule language. It does not add hidden-affix, unique-identity, set-identity, runeword-identity, or other unsupported/oracle conditions.
