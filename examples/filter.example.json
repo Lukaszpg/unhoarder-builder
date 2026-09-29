@@ -11,7 +11,7 @@
           "backgroundColor": "RGBA(110, 35, 160, 0.82)",
           "textColor": "RGBA(180, 140, 255, 1)"
         },
-        "dropSound": "Drop_Zing",
+        "dropSound": "Filter01",
         "minimapIcon": {
           "shape": "diamond",
           "borderColor": "RGBA(225, 205, 255, 1)",
