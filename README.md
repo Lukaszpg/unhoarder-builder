@@ -134,3 +134,8 @@ node tests/workspace-store.test.js
 - drop sound: 1–63 characters using letters, numbers, `_`, `-`
 - minimap shapes: `circle`, `diamond`, `triangle`, `star`
 - minimap size defaults to 12 px and is clamped by UnHoarder to 12–40 px
+
+
+### Drop sound previews
+
+The Builder supports the bundled UnHoarder drop sounds `Filter01` through `Filter16`. The Actions editor exposes them as a dropdown and can preview the selected FLAC locally at 50% volume.

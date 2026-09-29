@@ -33,6 +33,7 @@
   let dragInsertIndex = -1;
   let ruleDragPointerY = null;
   let ruleDragScrollFrame = null;
+  let dropSoundPreviewAudio = null;
   const RULE_DRAG_SCROLL_EDGE = 88;
   const RULE_DRAG_SCROLL_MAX_STEP = 24;
 
@@ -858,9 +859,37 @@
     renderTooltipVisualization(actions,block);
 
     const soundCard=el('div','action-card');soundCard.appendChild(el('strong','','Drop sound'));
-    const sound=el('input','text-input');sound.placeholder='sounds.txt row name, e.g. Drop_Zing';sound.value=block.dropSound||'';
-    sound.addEventListener('input',()=>{if(sound.value)block.dropSound=sound.value;else delete block.dropSound;renderPreview();renderRuleList();});
-    soundCard.appendChild(sound);soundCard.appendChild(el('span','help','1–63 characters: letters, numbers, underscore or hyphen.'));actions.appendChild(soundCard);
+    const soundRow=el('div','sound-action-row');
+    const sound=el('select','select-input');
+    const noSound=el('option','','No sound');noSound.value='';sound.appendChild(noSound);
+    M.DROP_SOUNDS.forEach(name=>{const option=el('option','',name);option.value=name;sound.appendChild(option);});
+    if(block.dropSound && !M.DROP_SOUNDS.includes(block.dropSound)){
+      const unsupported=el('option','',`Unsupported: ${block.dropSound}`);unsupported.value=block.dropSound;sound.appendChild(unsupported);
+    }
+    sound.value=block.dropSound||'';
+    const play=el('button','button icon ghost sound-preview-button');play.type='button';play.title='Preview selected sound at 50% volume';play.setAttribute('aria-label','Preview selected drop sound');
+    play.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7L8 5Z"/></svg>';
+    play.disabled=!M.DROP_SOUNDS.includes(sound.value);
+    sound.addEventListener('change',()=>{
+      if(M.DROP_SOUNDS.includes(sound.value))block.dropSound=sound.value;else delete block.dropSound;
+      play.disabled=!M.DROP_SOUNDS.includes(sound.value);
+      renderPreview();renderRuleList();
+    });
+    play.addEventListener('click',()=>{
+      const selected=sound.value;
+      if(!M.DROP_SOUNDS.includes(selected))return;
+      if(dropSoundPreviewAudio){dropSoundPreviewAudio.pause();dropSoundPreviewAudio.currentTime=0;}
+      const audio=new Audio(`assets/sounds/${selected}.flac`);
+      audio.volume=0.5;
+      dropSoundPreviewAudio=audio;
+      play.disabled=true;
+      const finish=()=>{if(dropSoundPreviewAudio===audio)dropSoundPreviewAudio=null;play.disabled=!M.DROP_SOUNDS.includes(sound.value);};
+      audio.addEventListener('ended',finish,{once:true});
+      audio.addEventListener('error',()=>{finish();toast(`Could not preview ${selected}.`,true);},{once:true});
+      audio.play().catch(()=>{finish();toast(`Could not preview ${selected}.`,true);});
+    });
+    soundRow.append(sound,play);soundCard.appendChild(soundRow);
+    soundCard.appendChild(el('span','help','Filter01–Filter16. Preview plays the bundled FLAC at 50% volume.'));actions.appendChild(soundCard);
 
     const mini=block.minimapIcon;
     const miniCard=el('div',`action-card${mini?'':' disabled'}`);const miniHead=el('div','action-card-head');

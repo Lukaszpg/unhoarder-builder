@@ -7,6 +7,7 @@
 
   const RARITIES = ['inferior','normal','superior','magic','set','rare','unique'];
   const MINIMAP_SHAPES = ['circle','diamond','triangle','star'];
+  const DROP_SOUNDS = Array.from({ length: 16 }, (_, i) => `Filter${String(i + 1).padStart(2, '0')}`);
   const CONDITION_KEYS = ['code','baseName','itemType','quantity','rarity','itemLevel','sockets','ethereal','identified'];
   const BLOCK_KEYS = ['ruleName','conditions','continue','name','tooltip','dropSound','minimapIcon'];
   const MAX_RULES = 4096;
@@ -322,7 +323,7 @@
           keys.forEach(k => { if (!parseRgba(t[k])) errors.push(`${p}.tooltip.${k} must be RGBA(r, g, b, a), RGB 0..255 and alpha 0..1.`); });
         }
       }
-      if ('dropSound' in block && (typeof block.dropSound !== 'string' || !/^[A-Za-z0-9_-]{1,63}$/.test(block.dropSound))) errors.push(`${p}.dropSound must be a 1..63 character sounds.txt row name using A-Z, a-z, 0-9, _ or -.`);
+      if ('dropSound' in block && (typeof block.dropSound !== 'string' || !DROP_SOUNDS.includes(block.dropSound))) errors.push(`${p}.dropSound must be one of Filter01..Filter16.`);
       if ('minimapIcon' in block) {
         const m = block.minimapIcon;
         if (!m || typeof m !== 'object' || Array.isArray(m)) errors.push(`${p}.minimapIcon must be an object.`);
@@ -422,6 +423,7 @@
   return {
     RARITIES,
     MINIMAP_SHAPES,
+    DROP_SOUNDS,
     CONDITION_KEYS,
     MAX_RULES,
     MAX_BYTES,

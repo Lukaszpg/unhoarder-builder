@@ -42,3 +42,10 @@ assert(!html.includes('downloadBtnSecondary'));
 assert(!app.includes('downloadBtnSecondary'));
 
 console.log('ui contract tests: OK');
+
+assert(app.includes("M.DROP_SOUNDS.forEach"));
+assert(app.includes("sound-preview-button"));
+assert(app.includes("audio.volume=0.5"));
+assert(app.includes("assets/sounds/"));
+assert(app.includes("Preview selected sound at 50% volume"));
+assert(!app.includes("sounds.txt row name, e.g. Drop_Zing"));

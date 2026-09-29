@@ -4,6 +4,7 @@ const M = require('../js/filter-model.js');
 assert.strictEqual(M.MAX_RULES, 4096);
 assert.strictEqual(M.MAX_BYTES, 4 * 1024 * 1024);
 assert.deepStrictEqual(M.RARITIES, ['inferior','normal','superior','magic','set','rare','unique']);
+assert.deepStrictEqual(M.DROP_SOUNDS, Array.from({ length: 16 }, (_, i) => `Filter${String(i + 1).padStart(2, '0')}`));
 assert.strictEqual(M.classifyDataFilename('UniqueItems.txt'), 'uniques');
 assert.strictEqual(M.classifyDataFilename('uniqueitems.txt'), 'uniques');
 assert.strictEqual(M.classifyDataFilename('Uniques.txt'), null);
@@ -31,7 +32,7 @@ const filter = {
       ruleName: 'Shako uniques',
       conditions: { baseName: 'Shako', rarity: 'unique', sockets: { gte: 1, lte: 6 } },
       tooltip: { backgroundColor: 'RGBA(110, 35, 160, 0.82)' },
-      dropSound: 'Drop_Zing',
+      dropSound: 'Filter01',
       minimapIcon: { shape: 'diamond', borderColor: 'RGBA(225, 205, 255, 1)', fillColor: 'RGBA(180, 140, 255, 0.82)', size: 20 }
     }
   }]
@@ -49,3 +50,6 @@ assert(invalidRarity.errors.some(x => x.includes('unsupported value')));
 assert(M.parseRgba('RGBA(255, 0, 128, 0.82)'));
 assert.strictEqual(M.parseRgba('RGBA(256, 0, 0, 1)'), null);
 console.log('filter-model tests: OK');
+
+const invalidDropSound = M.validateFilter({ version: 3, rules: [{ show: { dropSound: 'Drop_Zing' } }] }, catalog);
+assert(invalidDropSound.errors.some(x => x.includes('Filter01..Filter16')));
