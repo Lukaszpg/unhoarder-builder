@@ -6,7 +6,7 @@ The site has no backend and no external runtime dependencies. D2R Excel files ar
 
 ## For mod builders
 
-Mod builders are expected and should fork this repository to build their own versions of the builder that accomodate all the changes they made in their mods. The mod does not provide .txt file auto-load at the moment, so you will have to add it yourself. In the future this capability will be added,
+Mod builders are expected and should fork this repository to build their own versions of the builder that accomodates all the changes they made in their mods. The mod does not provide .txt file auto-load at the moment, so you will have to add it yourself. In the future this capability will be added.
 
 ## Features
 
