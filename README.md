@@ -122,8 +122,8 @@ node tests/workspace-store.test.js
 - `baseName` / `itemType`: string or array, up to 64 values
 - rarity: `inferior`, `normal`, `superior`, `magic`, `set`, `rare`, `unique`
 - `itemLevel`: 1–99
-- `quantity`: 0–65535
-- `sockets`: 0–15
+- `quantity`: 0–255
+- `sockets`: 0–6
 - numeric operators: `eq`, `gt`, `gte`, `lt`, `lte`
 - custom name: 1–79 ASCII bytes, up to 3 non-empty lines, max 55 characters per line
 - tooltip colors: `RGBA(r, g, b, a)` with RGB 0–255 and alpha 0–1
