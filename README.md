@@ -22,6 +22,7 @@ Mod builders are expected and should fork this repository to build their own ver
   - `rarity`
   - `itemLevel`
   - `sockets`
+  - `sellPrice`
   - `ethereal`
   - `identified`
 - The **Actions** editor is shown for `Show` rules and hidden for `Hide` rules; existing action metadata is preserved if a rule is temporarily switched to `Hide`.
@@ -128,6 +129,7 @@ node tests/workspace-store.test.js
 - `itemLevel`: 1–99
 - `quantity`: 0–255
 - `sockets`: 0–6
+- `sellPrice`: 0–4,294,967,295 gold; native vendor sell value exposed by UnHoarder
 - numeric operators: `eq`, `gt`, `gte`, `lt`, `lte`
 - custom name: 1–79 ASCII bytes, up to 3 non-empty lines, max 55 characters per line
 - tooltip colors: `RGBA(r, g, b, a)` with RGB 0–255 and alpha 0–1
