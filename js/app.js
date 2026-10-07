@@ -669,10 +669,10 @@
     parent.appendChild(grid);
   }
 
-  function renderNumericCard(parent, block, key, title, min, max) {
+  function renderNumericCard(parent, block, key, title, min, max, className = '') {
     const c = block.conditions || {};
     const test = c[key] || {};
-    const card = el('div', 'numeric-card');
+    const card = el('div', `numeric-card${className ? ` ${className}` : ''}`);
     card.appendChild(el('strong', '', title));
 
     const setTest = next => {
@@ -837,6 +837,7 @@
     renderNumericCard(numeric,block,'quantity','Quantity',0,65535);
     renderNumericCard(numeric,block,'itemLevel','Item level',1,99);
     renderNumericCard(numeric,block,'sockets','Sockets',0,15);
+    renderNumericCard(numeric,block,'sellPrice','Price',0,4294967295,'price-condition-card');
     const other=el('div','numeric-card other-condition-card');
     other.appendChild(el('strong','','Other'));
     const bools=el('div','two-col');renderBooleanCondition(bools,block,'ethereal','Ethereal');renderBooleanCondition(bools,block,'identified','Identified');other.appendChild(bools);numeric.appendChild(other);
