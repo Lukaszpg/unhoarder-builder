@@ -242,7 +242,7 @@ textarea { resize: vertical; min-height: 70px; }
 .numeric-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
 .numeric-card { background: #0f141d; border: 1px solid var(--line-soft); border-radius: 9px; padding: 10px; }
 .numeric-card strong { display: block; font-size: 12px; margin-bottom: 8px; }
-.other-condition-card { grid-column: 1 / -1; }
+.price-condition-card, .other-condition-card { grid-column: 1 / -1; }
 .other-condition-card .field { margin-bottom: 0; }
 .bound-row { display: grid; grid-template-columns: 88px 1fr; gap: 6px; margin-top: 6px; }
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
