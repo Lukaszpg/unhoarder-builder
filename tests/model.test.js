@@ -40,7 +40,7 @@ const filter = {
 const valid = M.validateFilter(filter, catalog);
 assert.deepStrictEqual(valid.errors, []);
 assert.strictEqual(M.summarizeRule(filter.rules[0]).ruleName, 'Shako uniques');
-assert(M.summarizeRule(filter.rules[0]).conditionSummary.includes('price ≥30000'));
+assert(M.summarizeRule(filter.rules[0]).conditionSummary.includes('price ≥ 30000'));
 const invalidRuleName = M.validateFilter({ version: 3, rules: [{ show: { ruleName: 123 } }] }, catalog);
 assert(invalidRuleName.errors.some(x => x.includes('ruleName must be a string')));
 
