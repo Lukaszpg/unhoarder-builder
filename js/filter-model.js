@@ -8,7 +8,7 @@
   const RARITIES = ['inferior','normal','superior','magic','set','rare','unique'];
   const MINIMAP_SHAPES = ['circle','diamond','triangle','star'];
   const DROP_SOUNDS = Array.from({ length: 16 }, (_, i) => `Filter${String(i + 1).padStart(2, '0')}`);
-  const CONDITION_KEYS = ['code','baseName','itemType','quantity','rarity','itemLevel','sockets','ethereal','identified'];
+  const CONDITION_KEYS = ['code','baseName','itemType','quantity','rarity','itemLevel','sockets','sellPrice','ethereal','identified'];
   const BLOCK_KEYS = ['ruleName','conditions','continue','name','tooltip','dropSound','minimapIcon'];
   const MAX_RULES = 4096;
   const MAX_BYTES = 4 * 1024 * 1024;
@@ -301,6 +301,7 @@
           if ('itemLevel' in c) validateNumberTest('itemLevel', c.itemLevel, 1, 99, errors, `${p}.conditions.itemLevel`);
           if ('quantity' in c) validateNumberTest('quantity', c.quantity, 0, 65535, errors, `${p}.conditions.quantity`);
           if ('sockets' in c) validateNumberTest('sockets', c.sockets, 0, 15, errors, `${p}.conditions.sockets`);
+          if ('sellPrice' in c) validateNumberTest('sellPrice', c.sellPrice, 0, 0xFFFFFFFF, errors, `${p}.conditions.sellPrice`);
         }
       }
 
@@ -392,6 +393,7 @@
     if ('sockets' in c) parts.push(`sockets ${summarizeNumberTest(c.sockets)}`);
     if ('itemLevel' in c) parts.push(`ilvl ${summarizeNumberTest(c.itemLevel)}`);
     if ('quantity' in c) parts.push(`qty ${summarizeNumberTest(c.quantity)}`);
+    if ('sellPrice' in c) parts.push(`price ${summarizeNumberTest(c.sellPrice)}`);
     if ('ethereal' in c) parts.push(`ethereal: ${c.ethereal}`);
     if ('identified' in c) parts.push(`identified: ${c.identified}`);
     if (!parts.length) parts.push('Catch-all');
