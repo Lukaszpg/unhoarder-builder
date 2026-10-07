@@ -30,7 +30,7 @@ const filter = {
   rules: [{
     show: {
       ruleName: 'Shako uniques',
-      conditions: { baseName: 'Shako', rarity: 'unique', sockets: { gte: 1, lte: 6 } },
+      conditions: { baseName: 'Shako', rarity: 'unique', sockets: { gte: 1, lte: 6 }, sellPrice: { gte: 30000 } },
       tooltip: { backgroundColor: 'RGBA(110, 35, 160, 0.82)' },
       dropSound: 'Filter01',
       minimapIcon: { shape: 'diamond', borderColor: 'RGBA(225, 205, 255, 1)', fillColor: 'RGBA(180, 140, 255, 0.82)', size: 20 }
@@ -40,11 +40,16 @@ const filter = {
 const valid = M.validateFilter(filter, catalog);
 assert.deepStrictEqual(valid.errors, []);
 assert.strictEqual(M.summarizeRule(filter.rules[0]).ruleName, 'Shako uniques');
+assert(M.summarizeRule(filter.rules[0]).conditionSummary.includes('price ≥30000'));
 const invalidRuleName = M.validateFilter({ version: 3, rules: [{ show: { ruleName: 123 } }] }, catalog);
 assert(invalidRuleName.errors.some(x => x.includes('ruleName must be a string')));
 
 const invalid = M.validateFilter({ version: 3, rules: [{ show: { conditions: { itemLevel: { gte: 100 } } } }] }, catalog);
 assert(invalid.errors.some(x => x.includes('1..99')));
+const invalidSellPrice = M.validateFilter({ version: 3, rules: [{ show: { conditions: { sellPrice: { gte: 4294967296 } } } }] }, catalog);
+assert(invalidSellPrice.errors.some(x => x.includes('0..4294967295')));
+const validSellPriceMax = M.validateFilter({ version: 3, rules: [{ show: { conditions: { sellPrice: { lte: 4294967295 } } } }] }, catalog);
+assert.deepStrictEqual(validSellPriceMax.errors, []);
 const invalidRarity = M.validateFilter({ version: 3, rules: [{ show: { conditions: { rarity: 'crafted' } } }] }, catalog);
 assert(invalidRarity.errors.some(x => x.includes('unsupported value')));
 assert(M.parseRgba('RGBA(255, 0, 128, 0.82)'));
